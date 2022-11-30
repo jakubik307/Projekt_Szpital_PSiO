@@ -1,7 +1,8 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    static Osoba[] osoby = new Osoba[20];
+    static ArrayList<Osoba> osoby = new ArrayList<Osoba>();
 
     public static void stanPoczatkowy() {
         Lekarz chirurg = new Lekarz("Jan", "Kowalski", 1, 31, 8000, "chirurg");
@@ -11,10 +12,10 @@ public class Main {
 
         Pacjent pacjent1 = new Pacjent("Jakub", "Mak", 4, 22);
 
-        osoby[0] = chirurg;
-        osoby[1] = ogolny;
-        osoby[2] = pielegniarka;
-        osoby[3] = pacjent1;
+        osoby.add(chirurg);
+        osoby.add(ogolny);
+        osoby.add(pielegniarka);
+        osoby.add(pacjent1);
     }
 
     public static void wczytajDane() {
@@ -28,9 +29,9 @@ public class Main {
     public static void wyswietlPracownikow() {
         System.out.println("Lista pracownikow: ");
 
-        for (int i = 0; i < osoby.length; i++) {
-            if (osoby[i] instanceof Pracownik) {
-                System.out.println("#" + i + " " + osoby[i]);
+        for (int i = 0; i < osoby.size(); i++) {
+            if (osoby.get(i) instanceof Pracownik) {
+                System.out.println("#" + i + " " + osoby.get(i));
                 System.out.println();
             }
         }
@@ -41,9 +42,9 @@ public class Main {
     public static void wyswietlLekarzy() {
         System.out.println("Lista lekarzy: ");
 
-        for (int i = 0; i < osoby.length; i++) {
-            if (osoby[i] instanceof Lekarz) {
-                System.out.println("#" + i + " " + osoby[i]);
+        for (int i = 0; i < osoby.size(); i++) {
+            if (osoby.get(i) instanceof Lekarz) {
+                System.out.println("#" + i + " " + osoby.get(i));
                 System.out.println();
             }
         }
@@ -53,9 +54,9 @@ public class Main {
     public static void wyswietlPielegniarki() {
         System.out.println("Lista pielegniarek: ");
 
-        for (int i = 0; i < osoby.length; i++) {
-            if (osoby[i] instanceof Pielegniarka) {
-                System.out.println("#" + i + " " + osoby[i]);
+        for (int i = 0; i < osoby.size(); i++) {
+            if (osoby.get(i) instanceof Pielegniarka) {
+                System.out.println("#" + i + " " + osoby.get(i));
                 System.out.println();
             }
         }
@@ -65,9 +66,9 @@ public class Main {
     public static void wyswietlPacjentow() {
         System.out.println("Lista pacjentow: ");
 
-        for (int i = 0; i < osoby.length; i++) {
-            if (osoby[i] instanceof Pacjent) {
-                System.out.println("#" + i + " " + osoby[i]);
+        for (int i = 0; i < osoby.size(); i++) {
+            if (osoby.get(i) instanceof Pacjent) {
+                System.out.println("#" + i + " " + osoby.get(i));
                 System.out.println();
             }
         }
@@ -75,17 +76,6 @@ public class Main {
     }
 
     public static void dodajLekarza() {
-        int i;
-        for (i = 0; i < osoby.length; i++) {
-            if (osoby[i] == null) {
-                break;
-            }
-        }
-        if (i == osoby.length) {
-            System.out.println("Nie ma wolnych miejsc");
-            return;
-        }
-
         Scanner scanner = new Scanner(System.in);
         String imie, nazwisko, specjalizacja;
         int pesel, wiek, pensja;
@@ -103,21 +93,10 @@ public class Main {
         System.out.println("Podaj specjalizacje: ");
         specjalizacja = scanner.next();
 
-        osoby[i] = new Lekarz(imie, nazwisko, pesel, wiek, pensja, specjalizacja);
+        osoby.add(new Lekarz(imie, nazwisko, pesel, wiek, pensja, specjalizacja));
     }
 
     public static void dodajPielegniarke() {
-        int i;
-        for (i = 0; i < osoby.length; i++) {
-            if (osoby[i] == null) {
-                break;
-            }
-        }
-        if (i == osoby.length) {
-            System.out.println("Nie ma wolnych miejsc");
-            return;
-        }
-
         Scanner scanner = new Scanner(System.in);
         String imie, nazwisko;
         int pesel, wiek, pensja;
@@ -133,21 +112,10 @@ public class Main {
         System.out.println("Podaj pensje: ");
         pensja = scanner.nextInt();
 
-        osoby[i] = new Pielegniarka(imie, nazwisko, pesel, wiek, pensja);
+        osoby.add(new Pielegniarka(imie, nazwisko, pesel, wiek, pensja));
     }
 
     public static void dodajPacjenta() {
-        int i;
-        for (i = 0; i < osoby.length; i++) {
-            if (osoby[i] == null) {
-                break;
-            }
-        }
-        if (i == osoby.length) {
-            System.out.println("Nie ma wolnych miejsc");
-            return;
-        }
-
         Scanner scanner = new Scanner(System.in);
         String imie, nazwisko;
         int pesel, wiek;
@@ -161,7 +129,7 @@ public class Main {
         System.out.println("Podaj wiek: ");
         wiek = scanner.nextInt();
 
-        osoby[i] = new Pacjent(imie, nazwisko, pesel, wiek);
+        osoby.add(new Pacjent(imie, nazwisko, pesel, wiek));
     }
 
     private static void leczenie() {
@@ -172,9 +140,9 @@ public class Main {
         idlekarz = scanner.nextInt();
         System.out.println("Podaj ID pacjenta");
         idpacjent = scanner.nextInt();
-        if (osoby[idlekarz] instanceof Lekarz && osoby[idpacjent] instanceof Pacjent) {
-            Lekarz lekarz = (Lekarz) osoby[idlekarz];
-            Pacjent pacjent = (Pacjent) osoby[idpacjent];
+        if (osoby.get(idlekarz) instanceof Lekarz && osoby.get(idpacjent) instanceof Pacjent) {
+            Lekarz lekarz = (Lekarz) osoby.get(idlekarz);
+            Pacjent pacjent = (Pacjent) osoby.get(idpacjent);
             lekarz.leczPacjenta(pacjent);
         } else {
             System.out.println("Nieprawidlowe dane");
@@ -189,9 +157,9 @@ public class Main {
         idpielegniarka = scanner.nextInt();
         System.out.println("Podaj ID pacjenta");
         idpacjent = scanner.nextInt();
-        if (osoby[idpielegniarka] instanceof Pielegniarka && osoby[idpacjent] instanceof Pacjent) {
-            Pielegniarka pielegniarka = (Pielegniarka) osoby[idpielegniarka];
-            Pacjent pacjent = (Pacjent) osoby[idpacjent];
+        if (osoby.get(idpielegniarka) instanceof Pielegniarka && osoby.get(idpacjent) instanceof Pacjent) {
+            Pielegniarka pielegniarka = (Pielegniarka) osoby.get(idpielegniarka);
+            Pacjent pacjent = (Pacjent) osoby.get(idpacjent);
             pielegniarka.wykonajSzczepienie(pacjent);
         } else {
             System.out.println("Nieprawidlowe dane");
@@ -204,8 +172,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Podaj ID pracownika");
         id = scanner.nextInt();
-        if (osoby[id] instanceof Pielegniarka || osoby[id] instanceof Lekarz) {
-            Pracownik pracownik = (Pracownik) osoby[id];
+        if (osoby.get(id) instanceof Pielegniarka || osoby.get(id) instanceof Lekarz) {
+            Pracownik pracownik = (Pracownik) osoby.get(id);
             Szpital.dajPodwyzke(pracownik);
             System.out.println("Przyznano wyplate");
         } else {
