@@ -1,4 +1,6 @@
-public class CertyfikatSzczepienia {
+import java.io.Serializable;
+
+public class CertyfikatSzczepienia implements Serializable {
     private boolean czySzczepiony;
     private int numerSzczepienia;
 

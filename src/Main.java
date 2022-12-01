@@ -1,8 +1,9 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    static ArrayList<Osoba> osoby = new ArrayList<Osoba>();
+    static ArrayList<Osoba> osoby = new ArrayList<>();
 
     public static void stanPoczatkowy() {
         Lekarz chirurg = new Lekarz("Jan", "Kowalski", 1, 31, 8000, "chirurg");
@@ -19,11 +20,28 @@ public class Main {
     }
 
     public static void wczytajDane() {
-//TODO
+        try {
+            ObjectInputStream is = new ObjectInputStream(new FileInputStream("bazadanych.ser"));
+            Object obj1 = is.readObject();
+            osoby = (ArrayList<Osoba>) obj1;
+            is.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Nie wczytano bazy danych");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void zapiszDane() {
-//TODO
+
+        try {
+            ObjectOutputStream so = new ObjectOutputStream(new FileOutputStream("bazadanych.ser"));
+            so.writeObject(osoby);
+            so.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static void wyswietlPracownikow() {
@@ -245,8 +263,11 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
         stanPoczatkowy();
+        wczytajDane();
         wyswietlMenu();
         while (menu(scanner.nextInt())) ;
+        zapiszDane();
     }
 }

@@ -1,4 +1,6 @@
-public abstract class Osoba {
+import java.io.Serializable;
+
+public abstract class Osoba implements Serializable {
     private final String imie, nazwisko;
     private final int pesel;
     private final int wiek;
