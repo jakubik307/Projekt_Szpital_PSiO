@@ -6,6 +6,10 @@ public class Lekarz extends Pracownik {
         this.specjalizacja = specjalizacja;
     }
 
+    public String getSpecjalizacja() {
+        return specjalizacja;
+    }
+
     public void leczPacjenta(Pacjent pacjent) {
         if (pacjent.isCzyChory()) {
             pacjent.setCzyChory(false);

@@ -150,6 +150,75 @@ public class Main {
         osoby.add(new Pacjent(imie, nazwisko, pesel, wiek));
     }
 
+    public static void szukajNazwisko() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Podaj nazwisko: ");
+        String nazwisko = scanner.next();
+
+        System.out.println("Lista wynikow: ");
+
+        for (int i = 0; i < osoby.size(); i++) {
+            if (osoby.get(i).getNazwisko().equals(nazwisko)) {
+                System.out.println("#" + i + " " + osoby.get(i));
+                System.out.println();
+            }
+        }
+        System.out.println("Nie znaleziono (innych) wynikow w bazie danych");
+    }
+
+    public static void szukajPacjentPesel() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Podaj pesel pacjenta: ");
+        int pesel = scanner.nextInt();
+
+        System.out.println("Lista wynikow: ");
+
+        for (int i = 0; i < osoby.size(); i++) {
+            if (osoby.get(i).getPesel() == pesel) {
+                System.out.println("#" + i + " " + osoby.get(i));
+                System.out.println();
+            }
+        }
+        System.out.println("Nie znaleziono (innych) wynikow w bazie danych");
+    }
+
+    public static void szukajPracownikWiek() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Podaj minimalny wiek: ");
+        int wiek = scanner.nextInt();
+
+        System.out.println("Lista wynikow: ");
+
+        for (int i = 0; i < osoby.size(); i++) {
+            if (osoby.get(i).getWiek() == wiek) {
+                System.out.println("#" + i + " " + osoby.get(i));
+                System.out.println();
+            }
+        }
+        System.out.println("Nie znaleziono (innych) wynikow w bazie danych");
+    }
+
+    public static void szukajSpecjalizacja() {
+        Scanner scanner = new Scanner(System.in);
+        Lekarz lekarz;
+
+        System.out.println("Podaj specjalizacje: ");
+        String specjalizacja = scanner.next();
+
+        System.out.println("Lista wynikow: ");
+
+        for (int i = 0; i < osoby.size(); i++) {
+            if (osoby.get(i) instanceof Lekarz && ((Lekarz) osoby.get(i)).getSpecjalizacja().equals(specjalizacja)) {
+                System.out.println("#" + i + " " + osoby.get(i));
+                System.out.println();
+            }
+        }
+        System.out.println("Nie znaleziono (innych) wynikow w bazie danych");
+    }
+
     private static void leczenie() {
         int idlekarz, idpacjent;
         System.out.println("Leczenie pacjenta");
@@ -211,6 +280,10 @@ public class Main {
         System.out.println("8 : Lecz pacjenta");
         System.out.println("9 : Zaszczep pacjenta");
         System.out.println("10 : Daj podwyzke");
+        System.out.println("11 : Szukaj po nazwisku");
+        System.out.println("12 : Szukaj pacjenta po peselu");
+        System.out.println("13 : Szukaj pracownika starszego niz");
+        System.out.println("14 : Szukaj lekarza po specjalizacji");
         System.out.println("0 : Wyjście");
     }
 
@@ -254,6 +327,18 @@ public class Main {
                 return true;
             case 10:
                 podwyzka();
+                return true;
+            case 11:
+                szukajNazwisko();
+                return true;
+            case 12:
+                szukajPacjentPesel();
+                return true;
+            case 13:
+                szukajPracownikWiek();
+                return true;
+            case 14:
+                szukajSpecjalizacja();
                 return true;
             default:
                 return false;
