@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -56,7 +57,6 @@ public class Main {
         System.out.println("Nie znaleziono (innych) wynikow w bazie danych");
     }
 
-
     public static void wyswietlLekarzy() {
         System.out.println("Lista lekarzy: ");
 
@@ -98,20 +98,24 @@ public class Main {
         String imie, nazwisko, specjalizacja;
         int pesel, wiek, pensja;
 
-        System.out.println("Podaj imie: ");
-        imie = scanner.next();
-        System.out.println("Podaj nazwisko: ");
-        nazwisko = scanner.next();
-        System.out.println("Podaj pesel: ");
-        pesel = scanner.nextInt();
-        System.out.println("Podaj wiek: ");
-        wiek = scanner.nextInt();
-        System.out.println("Podaj pensje: ");
-        pensja = scanner.nextInt();
-        System.out.println("Podaj specjalizacje: ");
-        specjalizacja = scanner.next();
+        try {
+            System.out.println("Podaj imie: ");
+            imie = scanner.next();
+            System.out.println("Podaj nazwisko: ");
+            nazwisko = scanner.next();
+            System.out.println("Podaj pesel: ");
+            pesel = scanner.nextInt();
+            System.out.println("Podaj wiek: ");
+            wiek = scanner.nextInt();
+            System.out.println("Podaj pensje: ");
+            pensja = scanner.nextInt();
+            System.out.println("Podaj specjalizacje: ");
+            specjalizacja = scanner.next();
 
-        osoby.add(new Lekarz(imie, nazwisko, pesel, wiek, pensja, specjalizacja));
+            osoby.add(new Lekarz(imie, nazwisko, pesel, wiek, pensja, specjalizacja));
+        } catch (InputMismatchException e) {
+            System.out.println("Wprowadzono bledne dane");
+        }
     }
 
     public static void dodajPielegniarke() {
@@ -119,18 +123,22 @@ public class Main {
         String imie, nazwisko;
         int pesel, wiek, pensja;
 
-        System.out.println("Podaj imie: ");
-        imie = scanner.next();
-        System.out.println("Podaj nazwisko: ");
-        nazwisko = scanner.next();
-        System.out.println("Podaj pesel: ");
-        pesel = scanner.nextInt();
-        System.out.println("Podaj wiek: ");
-        wiek = scanner.nextInt();
-        System.out.println("Podaj pensje: ");
-        pensja = scanner.nextInt();
+        try {
+            System.out.println("Podaj imie: ");
+            imie = scanner.next();
+            System.out.println("Podaj nazwisko: ");
+            nazwisko = scanner.next();
+            System.out.println("Podaj pesel: ");
+            pesel = scanner.nextInt();
+            System.out.println("Podaj wiek: ");
+            wiek = scanner.nextInt();
+            System.out.println("Podaj pensje: ");
+            pensja = scanner.nextInt();
 
-        osoby.add(new Pielegniarka(imie, nazwisko, pesel, wiek, pensja));
+            osoby.add(new Pielegniarka(imie, nazwisko, pesel, wiek, pensja));
+        } catch (InputMismatchException e) {
+            System.out.println("Wprowadzono bledne dane");
+        }
     }
 
     public static void dodajPacjenta() {
@@ -138,16 +146,20 @@ public class Main {
         String imie, nazwisko;
         int pesel, wiek;
 
-        System.out.println("Podaj imie: ");
-        imie = scanner.next();
-        System.out.println("Podaj nazwisko: ");
-        nazwisko = scanner.next();
-        System.out.println("Podaj pesel: ");
-        pesel = scanner.nextInt();
-        System.out.println("Podaj wiek: ");
-        wiek = scanner.nextInt();
+        try {
+            System.out.println("Podaj imie: ");
+            imie = scanner.next();
+            System.out.println("Podaj nazwisko: ");
+            nazwisko = scanner.next();
+            System.out.println("Podaj pesel: ");
+            pesel = scanner.nextInt();
+            System.out.println("Podaj wiek: ");
+            wiek = scanner.nextInt();
 
-        osoby.add(new Pacjent(imie, nazwisko, pesel, wiek));
+            osoby.add(new Pacjent(imie, nazwisko, pesel, wiek));
+        } catch (InputMismatchException e) {
+            System.out.println("Wprowadzono bledne dane");
+        }
     }
 
     public static void szukajNazwisko() {
@@ -203,7 +215,6 @@ public class Main {
 
     public static void szukajSpecjalizacja() {
         Scanner scanner = new Scanner(System.in);
-        Lekarz lekarz;
 
         System.out.println("Podaj specjalizacje: ");
         String specjalizacja = scanner.next();
@@ -227,13 +238,19 @@ public class Main {
         idlekarz = scanner.nextInt();
         System.out.println("Podaj ID pacjenta");
         idpacjent = scanner.nextInt();
-        if (osoby.get(idlekarz) instanceof Lekarz && osoby.get(idpacjent) instanceof Pacjent) {
-            Lekarz lekarz = (Lekarz) osoby.get(idlekarz);
-            Pacjent pacjent = (Pacjent) osoby.get(idpacjent);
-            lekarz.leczPacjenta(pacjent);
-        } else {
-            System.out.println("Nieprawidlowe dane");
+
+        try {
+            if (osoby.get(idlekarz) instanceof Lekarz && osoby.get(idpacjent) instanceof Pacjent) {
+                Lekarz lekarz = (Lekarz) osoby.get(idlekarz);
+                Pacjent pacjent = (Pacjent) osoby.get(idpacjent);
+                lekarz.leczPacjenta(pacjent);
+            } else {
+                System.out.println("Nieprawidlowe dane");
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Nieprawidlowe ID");
         }
+
     }
 
     private static void szczepienie() {
@@ -244,12 +261,17 @@ public class Main {
         idpielegniarka = scanner.nextInt();
         System.out.println("Podaj ID pacjenta");
         idpacjent = scanner.nextInt();
-        if (osoby.get(idpielegniarka) instanceof Pielegniarka && osoby.get(idpacjent) instanceof Pacjent) {
-            Pielegniarka pielegniarka = (Pielegniarka) osoby.get(idpielegniarka);
-            Pacjent pacjent = (Pacjent) osoby.get(idpacjent);
-            pielegniarka.wykonajSzczepienie(pacjent);
-        } else {
-            System.out.println("Nieprawidlowe dane");
+
+        try {
+            if (osoby.get(idpielegniarka) instanceof Pielegniarka && osoby.get(idpacjent) instanceof Pacjent) {
+                Pielegniarka pielegniarka = (Pielegniarka) osoby.get(idpielegniarka);
+                Pacjent pacjent = (Pacjent) osoby.get(idpacjent);
+                pielegniarka.wykonajSzczepienie(pacjent);
+            } else {
+                System.out.println("Nieprawidlowe dane");
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Nieprawidlowe ID");
         }
     }
 
@@ -259,12 +281,16 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Podaj ID pracownika");
         id = scanner.nextInt();
-        if (osoby.get(id) instanceof Pielegniarka || osoby.get(id) instanceof Lekarz) {
-            Pracownik pracownik = (Pracownik) osoby.get(id);
-            Szpital.dajPodwyzke(pracownik);
-            System.out.println("Przyznano wyplate");
-        } else {
-            System.out.println("Nieprawidlowe dane");
+        try {
+            if (osoby.get(id) instanceof Pielegniarka || osoby.get(id) instanceof Lekarz) {
+                Pracownik pracownik = (Pracownik) osoby.get(id);
+                Szpital.dajPodwyzke(pracownik);
+                System.out.println("Przyznano wyplate");
+            } else {
+                System.out.println("Nieprawidlowe dane");
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Nieprawidlowe ID");
         }
     }
 
@@ -327,18 +353,23 @@ public class Main {
                 return true;
             case 10:
                 podwyzka();
+                wyswietlMenu();
                 return true;
             case 11:
                 szukajNazwisko();
+                wyswietlMenu();
                 return true;
             case 12:
                 szukajPacjentPesel();
+                wyswietlMenu();
                 return true;
             case 13:
                 szukajPracownikWiek();
+                wyswietlMenu();
                 return true;
             case 14:
                 szukajSpecjalizacja();
+                wyswietlMenu();
                 return true;
             default:
                 return false;
