@@ -313,68 +313,71 @@ public class Main {
         System.out.println("0 : Wyjście");
     }
 
-    public static boolean menu(int opcja) {
+    public static boolean menu(String opcja) {
         switch (opcja) {
-            case 1:
+            case "1":
                 wyswietlPracownikow();
                 wyswietlMenu();
                 return true;
-            case 2:
+            case "2":
                 wyswietlLekarzy();
                 wyswietlMenu();
                 return true;
-            case 3:
+            case "3":
                 wyswietlPielegniarki();
                 wyswietlMenu();
                 return true;
-            case 4:
+            case "4":
                 wyswietlPacjentow();
                 wyswietlMenu();
                 return true;
-            case 5:
+            case "5":
                 dodajLekarza();
                 wyswietlMenu();
                 return true;
-            case 6:
+            case "6":
                 dodajPielegniarke();
                 wyswietlMenu();
                 return true;
-            case 7:
+            case "7":
                 dodajPacjenta();
                 wyswietlMenu();
                 return true;
-            case 8:
+            case "8":
                 leczenie();
                 wyswietlMenu();
                 return true;
-            case 9:
+            case "9":
                 szczepienie();
                 wyswietlMenu();
                 return true;
-            case 10:
+            case "10":
                 podwyzka();
                 wyswietlMenu();
                 return true;
-            case 11:
+            case "11":
                 szukajNazwisko();
                 wyswietlMenu();
                 return true;
-            case 12:
+            case "12":
                 szukajPacjentPesel();
                 wyswietlMenu();
                 return true;
-            case 13:
+            case "13":
                 szukajPracownikWiek();
                 wyswietlMenu();
                 return true;
-            case 14:
+            case "14":
                 szukajSpecjalizacja();
                 wyswietlMenu();
                 return true;
-            default:
+            case "0":
                 return false;
+            default:
+                System.out.println("Wprowadzono nieprawidlowa opcje\n");
+                wyswietlMenu();
+                return true;
         }
-
     }
 
     public static void main(String[] args) {
@@ -383,7 +386,7 @@ public class Main {
         stanPoczatkowy();
         wczytajDane();
         wyswietlMenu();
-        while (menu(scanner.nextInt())) ;
+        while (menu(scanner.next())) ;
         zapiszDane();
     }
 }
