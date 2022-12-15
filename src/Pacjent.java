@@ -1,15 +1,17 @@
+import java.util.ArrayList;
+
 public class Pacjent extends Osoba {
-    private final CertyfikatSzczepienia certyfikatSzczepienia;
+    private ArrayList<CertyfikatSzczepienia> certyfikatySzczepienia;
     private boolean czyChory;
 
     public Pacjent(String imie, String nazwisko, int pesel, int wiek) {
         super(imie, nazwisko, pesel, wiek);
-        this.certyfikatSzczepienia = new CertyfikatSzczepienia();
+        this.certyfikatySzczepienia = new ArrayList<>();
         this.czyChory = true;
     }
 
-    public CertyfikatSzczepienia getCertyfikatSzczepienia() {
-        return certyfikatSzczepienia;
+    public ArrayList<CertyfikatSzczepienia> getCertyfikatySzczepienia() {
+        return certyfikatySzczepienia;
     }
 
     public boolean isCzyChory() {
@@ -22,6 +24,6 @@ public class Pacjent extends Osoba {
 
     @Override
     public String toString() {
-        return "Pacjent: " + super.toString() + "\nChory: " + isCzyChory() + "\n" + certyfikatSzczepienia;
+        return "Pacjent: " + super.toString() + "\nChory: " + isCzyChory() + "\n" + certyfikatySzczepienia;
     }
 }
