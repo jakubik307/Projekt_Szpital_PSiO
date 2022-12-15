@@ -1,4 +1,5 @@
 public abstract class Pracownik extends Osoba {
+    private int etat;
     private int pensja;
 
     public Pracownik(String imie, String nazwisko, int pesel, int wiek, int pensja) {

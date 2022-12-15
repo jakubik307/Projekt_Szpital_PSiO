@@ -12,12 +12,14 @@ public class Main {
 
         Pielegniarka pielegniarka = new Pielegniarka("Anna", "Kowalska", 3, 41, 5000);
 
-        Pacjent pacjent1 = new Pacjent("Jakub", "Mak", 4, 22);
+        Dorosly dorosly1 = new Dorosly("Jakub", "Mak", 4, 22);
+        Dziecko dziecko1 = new Dziecko("Anna", "Górska", 5, 6);
 
         osoby.add(chirurg);
         osoby.add(ogolny);
         osoby.add(pielegniarka);
-        osoby.add(pacjent1);
+        osoby.add(dorosly1);
+        osoby.add(dziecko1);
     }
 
     public static void wczytajDane() {
@@ -156,7 +158,11 @@ public class Main {
             System.out.println("Podaj wiek: ");
             wiek = scanner.nextInt();
 
-            osoby.add(new Pacjent(imie, nazwisko, pesel, wiek));
+            if (wiek < 18) {
+                osoby.add(new Dziecko(imie, nazwisko, pesel, wiek));
+            } else {
+                osoby.add(new Dorosly(imie, nazwisko, pesel, wiek));
+            }
         } catch (InputMismatchException e) {
             System.out.println("Wprowadzono bledne dane");
         }
@@ -386,7 +392,7 @@ public class Main {
         stanPoczatkowy();
         wczytajDane();
         wyswietlMenu();
-        while (menu(scanner.next())) ;
+        while (menu(scanner.next()));
         zapiszDane();
     }
 }

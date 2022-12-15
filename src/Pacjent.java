@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Pacjent extends Osoba {
+public abstract class Pacjent extends Osoba {
     private ArrayList<CertyfikatSzczepienia> certyfikatySzczepienia;
     private boolean czyChory;
 
