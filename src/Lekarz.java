@@ -1,8 +1,8 @@
 public class Lekarz extends Pracownik {
     private final String specjalizacja;
 
-    public Lekarz(String imie, String nazwisko, int pesel, int wiek, int pensja, String specjalizacja) {
-        super(imie, nazwisko, pesel, wiek, pensja);
+    public Lekarz(String imie, String nazwisko, int pesel, int wiek, int etat, String specjalizacja) {
+        super(imie, nazwisko, pesel, wiek, etat);
         this.specjalizacja = specjalizacja;
     }
 

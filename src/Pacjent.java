@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public abstract class Pacjent extends Osoba {
     private ArrayList<CertyfikatSzczepienia> certyfikatySzczepienia;
     private boolean czyChory;
+    private int kosztyLeczenia;
 
     public Pacjent(String imie, String nazwisko, int pesel, int wiek) {
         super(imie, nazwisko, pesel, wiek);
@@ -14,6 +15,10 @@ public abstract class Pacjent extends Osoba {
         return certyfikatySzczepienia;
     }
 
+    public void setCertyfikatySzczepienia(ArrayList<CertyfikatSzczepienia> certyfikatySzczepienia) {
+        this.certyfikatySzczepienia = certyfikatySzczepienia;
+    }
+
     public boolean isCzyChory() {
         return czyChory;
     }
@@ -22,8 +27,16 @@ public abstract class Pacjent extends Osoba {
         this.czyChory = czyChory;
     }
 
+    public int getKosztyLeczenia() {
+        return kosztyLeczenia;
+    }
+
+    public void setKosztyLeczenia(int kosztyLeczenia) {
+        this.kosztyLeczenia = kosztyLeczenia;
+    }
+
     @Override
     public String toString() {
-        return "Pacjent: " + super.toString() + "\nChory: " + isCzyChory() + "\n" + certyfikatySzczepienia;
+        return "Pacjent: " + super.toString() + "\nChory: " + isCzyChory() + "\n" + certyfikatySzczepienia + "\n" + "Koszty Leczenia: " + kosztyLeczenia;
     }
 }

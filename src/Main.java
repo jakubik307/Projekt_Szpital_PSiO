@@ -1,3 +1,10 @@
+import StrategiaKosztyLeczenia.Koszty;
+import StrategiaKosztyLeczenia.KosztyDorosly;
+import StrategiaKosztyLeczenia.KosztyDziecko;
+import StrategiaPensja.Pensja;
+import StrategiaPensja.PensjaLekarz;
+import StrategiaPensja.PensjaPielegniarka;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -7,13 +14,27 @@ public class Main {
     static ArrayList<Osoba> osoby = new ArrayList<>();
 
     public static void stanPoczatkowy() {
-        Lekarz chirurg = new Lekarz("Jan", "Kowalski", 1, 31, 8000, "chirurg");
-        Lekarz ogolny = new Lekarz("Piotr", "Nowak", 2, 25, 4000, "ogolny");
+        //Wczytanie poczatkowej bazy danych w przypadku gdy nie byla ona wczesniej utworzona;
+        Koszty koszty = new KosztyDorosly();
+        Pensja pensja = new PensjaLekarz();
 
-        Pielegniarka pielegniarka = new Pielegniarka("Anna", "Kowalska", 3, 41, 5000);
+        Lekarz chirurg = new Lekarz("Jan", "Kowalski", 1, 31, 40, "chirurg");
+        chirurg.setPensja(pensja.liczeniePensji(chirurg.getEtat()));
+        Lekarz ogolny = new Lekarz("Piotr", "Nowak", 2, 25, 50, "ogolny");
+        ogolny.setPensja(pensja.liczeniePensji(ogolny.getEtat()));
+
+        pensja = new PensjaPielegniarka();
+
+        Pielegniarka pielegniarka = new Pielegniarka("Anna", "Kowalska", 3, 41, 40);
+        pielegniarka.setPensja(pensja.liczeniePensji(pielegniarka.getEtat()));
 
         Dorosly dorosly1 = new Dorosly("Jakub", "Mak", 4, 22);
+        dorosly1.setKosztyLeczenia(koszty.liczenieKosztowLeczenia(dorosly1.getWiek()));
+
+        koszty = new KosztyDziecko();
+
         Dziecko dziecko1 = new Dziecko("Anna", "Górska", 5, 6);
+        dziecko1.setKosztyLeczenia(koszty.liczenieKosztowLeczenia(dziecko1.getWiek()));
 
         osoby.add(chirurg);
         osoby.add(ogolny);
@@ -29,7 +50,7 @@ public class Main {
             osoby = (ArrayList<Osoba>) obj1;
             is.close();
         } catch (FileNotFoundException e) {
-            System.out.println("Nie wczytano bazy danych");
+            System.out.println("Wczytano domyslna baze danych");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -98,7 +119,8 @@ public class Main {
     public static void dodajLekarza() {
         Scanner scanner = new Scanner(System.in);
         String imie, nazwisko, specjalizacja;
-        int pesel, wiek, pensja;
+        int pesel, wiek, etat;
+        Pensja pensja = new PensjaLekarz(); //Ustawienie wybranej strategii przyznawania pensji
 
         try {
             System.out.println("Podaj imie: ");
@@ -109,12 +131,17 @@ public class Main {
             pesel = scanner.nextInt();
             System.out.println("Podaj wiek: ");
             wiek = scanner.nextInt();
-            System.out.println("Podaj pensje: ");
-            pensja = scanner.nextInt();
+            System.out.println("Podaj etat: ");
+            etat = scanner.nextInt();
             System.out.println("Podaj specjalizacje: ");
             specjalizacja = scanner.next();
 
-            osoby.add(new Lekarz(imie, nazwisko, pesel, wiek, pensja, specjalizacja));
+            Lekarz lekarz = new Lekarz(imie, nazwisko, pesel, wiek, etat, specjalizacja);
+            //Ustawienie pensji lekarza
+            lekarz.setPensja(pensja.liczeniePensji(lekarz.getEtat()));
+
+            //Dodanie lekarza do bazy danych
+            osoby.add(lekarz);
         } catch (InputMismatchException e) {
             System.out.println("Wprowadzono bledne dane");
         }
@@ -123,7 +150,8 @@ public class Main {
     public static void dodajPielegniarke() {
         Scanner scanner = new Scanner(System.in);
         String imie, nazwisko;
-        int pesel, wiek, pensja;
+        int pesel, wiek, etat;
+        Pensja pensja = new PensjaPielegniarka(); //Ustawienie wybranej strategii przyznawania pensji
 
         try {
             System.out.println("Podaj imie: ");
@@ -134,10 +162,15 @@ public class Main {
             pesel = scanner.nextInt();
             System.out.println("Podaj wiek: ");
             wiek = scanner.nextInt();
-            System.out.println("Podaj pensje: ");
-            pensja = scanner.nextInt();
+            System.out.println("Podaj etat: ");
+            etat = scanner.nextInt();
 
-            osoby.add(new Pielegniarka(imie, nazwisko, pesel, wiek, pensja));
+            Pielegniarka pielegniarka = new Pielegniarka(imie, nazwisko, pesel, wiek, etat);
+            //Ustawienie pensji pielegniarki
+            pielegniarka.setPensja(pensja.liczeniePensji(pielegniarka.getEtat()));
+
+            //Dodanie pielegniarki do bazy danych
+            osoby.add(pielegniarka);
         } catch (InputMismatchException e) {
             System.out.println("Wprowadzono bledne dane");
         }
@@ -147,6 +180,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String imie, nazwisko;
         int pesel, wiek;
+        Koszty koszty;
 
         try {
             System.out.println("Podaj imie: ");
@@ -159,9 +193,21 @@ public class Main {
             wiek = scanner.nextInt();
 
             if (wiek < 18) {
-                osoby.add(new Dziecko(imie, nazwisko, pesel, wiek));
+                Dziecko dziecko = new Dziecko(imie, nazwisko, pesel, wiek);
+
+                //Zastosowanie strategii liczenia kosztow leczenia dla dziecka
+                koszty = new KosztyDziecko();
+                dziecko.setKosztyLeczenia(koszty.liczenieKosztowLeczenia(dziecko.getWiek()));
+
+                osoby.add(dziecko);
             } else {
-                osoby.add(new Dorosly(imie, nazwisko, pesel, wiek));
+                Dorosly dorosly = new Dorosly(imie, nazwisko, pesel, wiek);
+
+                //Zastosowanie strategii liczenia kosztow leczenia dla doroslego
+                koszty = new KosztyDorosly();
+                dorosly.setKosztyLeczenia(koszty.liczenieKosztowLeczenia(dorosly.getWiek()));
+
+                osoby.add(dorosly);
             }
         } catch (InputMismatchException e) {
             System.out.println("Wprowadzono bledne dane");
@@ -392,7 +438,7 @@ public class Main {
         stanPoczatkowy();
         wczytajDane();
         wyswietlMenu();
-        while (menu(scanner.next()));
+        while (menu(scanner.next())) ;
         zapiszDane();
     }
 }
