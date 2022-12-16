@@ -73,7 +73,7 @@ public class Main {
 
         for (int i = 0; i < osoby.size(); i++) {
             if (osoby.get(i) instanceof Pracownik) {
-                System.out.println("#" + i + " " + osoby.get(i));
+                System.out.println("ID:" + i + " " + osoby.get(i));
                 System.out.println();
             }
         }
@@ -85,7 +85,7 @@ public class Main {
 
         for (int i = 0; i < osoby.size(); i++) {
             if (osoby.get(i) instanceof Lekarz) {
-                System.out.println("#" + i + " " + osoby.get(i));
+                System.out.println("ID:" + i + " " + osoby.get(i));
                 System.out.println();
             }
         }
@@ -97,7 +97,7 @@ public class Main {
 
         for (int i = 0; i < osoby.size(); i++) {
             if (osoby.get(i) instanceof Pielegniarka) {
-                System.out.println("#" + i + " " + osoby.get(i));
+                System.out.println("ID:" + i + " " + osoby.get(i));
                 System.out.println();
             }
         }
@@ -109,7 +109,7 @@ public class Main {
 
         for (int i = 0; i < osoby.size(); i++) {
             if (osoby.get(i) instanceof Pacjent) {
-                System.out.println("#" + i + " " + osoby.get(i));
+                System.out.println("ID:" + i + " " + osoby.get(i));
                 System.out.println();
             }
         }
@@ -224,7 +224,7 @@ public class Main {
 
         for (int i = 0; i < osoby.size(); i++) {
             if (osoby.get(i).getNazwisko().equals(nazwisko)) {
-                System.out.println("#" + i + " " + osoby.get(i));
+                System.out.println("ID:" + i + " " + osoby.get(i));
                 System.out.println();
             }
         }
@@ -241,7 +241,7 @@ public class Main {
 
         for (int i = 0; i < osoby.size(); i++) {
             if (osoby.get(i).getPesel() == pesel) {
-                System.out.println("#" + i + " " + osoby.get(i));
+                System.out.println("ID:" + i + " " + osoby.get(i));
                 System.out.println();
             }
         }
@@ -258,7 +258,7 @@ public class Main {
 
         for (int i = 0; i < osoby.size(); i++) {
             if (osoby.get(i).getWiek() == wiek) {
-                System.out.println("#" + i + " " + osoby.get(i));
+                System.out.println("ID:" + i + " " + osoby.get(i));
                 System.out.println();
             }
         }
@@ -275,7 +275,7 @@ public class Main {
 
         for (int i = 0; i < osoby.size(); i++) {
             if (osoby.get(i) instanceof Lekarz && ((Lekarz) osoby.get(i)).getSpecjalizacja().equals(specjalizacja)) {
-                System.out.println("#" + i + " " + osoby.get(i));
+                System.out.println("ID:" + i + " " + osoby.get(i));
                 System.out.println();
             }
         }
@@ -292,9 +292,7 @@ public class Main {
         idpacjent = scanner.nextInt();
 
         try {
-            if (osoby.get(idlekarz) instanceof Lekarz && osoby.get(idpacjent) instanceof Pacjent) {
-                Lekarz lekarz = (Lekarz) osoby.get(idlekarz);
-                Pacjent pacjent = (Pacjent) osoby.get(idpacjent);
+            if (osoby.get(idlekarz) instanceof Lekarz lekarz && osoby.get(idpacjent) instanceof Pacjent pacjent) {
                 lekarz.leczPacjenta(pacjent);
             } else {
                 System.out.println("Nieprawidlowe dane");
@@ -315,9 +313,7 @@ public class Main {
         idpacjent = scanner.nextInt();
 
         try {
-            if (osoby.get(idpielegniarka) instanceof Pielegniarka && osoby.get(idpacjent) instanceof Pacjent) {
-                Pielegniarka pielegniarka = (Pielegniarka) osoby.get(idpielegniarka);
-                Pacjent pacjent = (Pacjent) osoby.get(idpacjent);
+            if (osoby.get(idpielegniarka) instanceof Pielegniarka pielegniarka && osoby.get(idpacjent) instanceof Pacjent pacjent) {
                 pielegniarka.wykonajSzczepienie(pacjent);
             } else {
                 System.out.println("Nieprawidlowe dane");
@@ -435,10 +431,10 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        stanPoczatkowy();
+        stanPoczatkowy(); //Dodanie domyslnych osob do bazy danych
         wczytajDane();
         wyswietlMenu();
-        while (menu(scanner.next())) ;
+        while (menu(scanner.next())) ; // Glowna petla obslugujaca menu
         zapiszDane();
     }
 }

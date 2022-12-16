@@ -1,8 +1,8 @@
 package StrategiaPensja;
 
-public class PensjaLekarz implements Pensja{
+public class PensjaLekarz implements Pensja {
     @Override
     public int liczeniePensji(int etat) {
-        return etat*300;
+        return etat * 300;
     }
 }

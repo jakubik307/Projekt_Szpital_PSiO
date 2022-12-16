@@ -25,6 +25,6 @@ public abstract class Pracownik extends Osoba {
 
     @Override
     public String toString() {
-        return super.toString() + " \nPensja: " + pensja;
+        return super.toString() + " \nEtat: " + etat + " \nPensja: " + pensja;
     }
 }
